@@ -1,0 +1,40 @@
+Script started on 2026-10-10 16:50:16+03:00 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="154" LINES="62"]
+[?2004h]0;alexandr@codebylinux: ~[01;32malexandr@codebylinux[00m:[01;34m~[00m$ va[K[Kjava -version 
+[?2004lopenjdk version "21.0.12.1" 2026-08-18
+OpenJDK Runtime Environment (build 21.0.12.1+1-1-26.04.4-Ubuntu)
+OpenJDK 64-Bit Server VM (build 21.0.12.1+1-1-26.04.4-Ubuntu, mixed mode, sharing)
+[?2004h]0;alexandr@codebylinux: ~[01;32malexandr@codebylinux[00m:[01;34m~[00m$ java -version [1@c
+[?2004ljavac 21.0.12.1
+[?2004h]0;alexandr@codebylinux: ~[01;32malexandr@codebylinux[00m:[01;34m~[00m$ sudo up[[Kdate-alternatives --config java
+[?2004l[sudo: authenticate] Password: ************            
+There are 2 choices for the alternative java (providing /usr/bin/java).
+
+  Selection    Path                                         Priority   Status
+------------------------------------------------------------
+* 0            /usr/lib/jvm/java-21-openjdk-amd64/bin/java   2111      auto mode
+  1            /opt/jdk-17/bin/java                          1700      manual mode
+  2            /usr/lib/jvm/java-21-openjdk-amd64/bin/java   2111      manual mode
+
+Press <enter> to keep the current choice[*], or type selection number: 1
+update-alternatives: using /opt/jdk-17/bin/java to provide /usr/bin/java (java) in manual mode
+[?2004h]0;alexandr@codebylinux: ~[01;32malexandr@codebylinux[00m:[01;34m~[00m$ sudo update-alternatives --config javac
+[?2004lThere are 2 choices for the alternative javac (providing /usr/bin/javac).
+
+  Selection    Path                                          Priority   Status
+------------------------------------------------------------
+* 0            /usr/lib/jvm/java-21-openjdk-amd64/bin/javac   2111      auto mode
+  1            /opt/jdk-17/bin/javac                          1700      manual mode
+  2            /usr/lib/jvm/java-21-openjdk-amd64/bin/javac   2111      manual mode
+
+Press <enter> to keep the current choice[*], or type selection number: 1
+update-alternatives: using /opt/jdk-17/bin/javac to provide /usr/bin/javac (javac) in manual mode
+[?2004h]0;alexandr@codebylinux: ~[01;32malexandr@codebylinux[00m:[01;34m~[00m$ sudo update-alternatives --config javac[K[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[23Pjavac -version [1P[C[C[C[C[C[C[C[C[C[C
+[?2004lopenjdk version "17.0.20.1" 2026-08-18
+OpenJDK Runtime Environment Temurin-17.0.20.1+1 (build 17.0.20.1+1)
+OpenJDK 64-Bit Server VM Temurin-17.0.20.1+1 (build 17.0.20.1+1, mixed mode, sharing)
+[?2004h]0;alexandr@codebylinux: ~[01;32malexandr@codebylinux[00m:[01;34m~[00m$ java -version sudo update-alternatives --config javac[K[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[23Pjavac -version 
+[?2004ljavac 17.0.20.1
+[?2004h]0;alexandr@codebylinux: ~[01;32malexandr@codebylinux[00m:[01;34m~[00m$ exit
+[?2004lexit
+
+Script done on 2026-10-10 16:59:58+03:00 [COMMAND_EXIT_CODE="0"]

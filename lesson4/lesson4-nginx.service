@@ -1,0 +1,15 @@
+[Unit]
+Description=Nginx for lesson4
+After=network.target
+
+[Service]
+Type=exec
+ExecStartPre=/usr/sbin/nginx -t
+ExecStart=/usr/sbin/nginx -g 'daemon off; master_process on;'
+ExecReload=/usr/sbin/nginx -s reload
+KillSignal=SIGQUIT
+KillMode=mixed
+TimeoutStopSec=30
+
+[Install]
+WantedBy=multi-user.target
