@@ -1,0 +1,26 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-24.04"
+
+  config.vm.provider "vmware_desktop" do |vmware|
+    vmware.gui = true
+    vmware.vmx["memsize"] = "2048"
+    vmware.vmx["numvcpus"] = "2"
+  end
+
+  config.vm.define "server" do |server|
+    server.vm.hostname = "server"
+    server.vm.network "private_network",
+      ip: "192.168.56.21",
+      netmask: "255.255.255.0"
+  end
+
+  config.vm.define "store" do |store|
+    store.vm.hostname = "store"
+    store.vm.network "private_network",
+      ip: "192.168.56.22",
+      netmask: "255.255.255.0"
+  end
+end
