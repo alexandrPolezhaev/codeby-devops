@@ -1,0 +1,26 @@
+---
+- name: Configure hosts
+  hosts: webservers
+  become: true
+  gather_facts: false
+
+  tasks:
+    - name: Install packages
+      ansible.builtin.apt:
+        name:
+          - wget
+          - htop
+          - nginx
+        state: present
+        update_cache: true
+        cache_valid_time: 3600
+
+    - name: Start nginx and enable autostart
+      ansible.builtin.service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Show environment
+      ansible.builtin.debug:
+        msg: "This host is in {{ environment_name }} environment"

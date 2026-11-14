@@ -1,0 +1,201 @@
+Lesson 12 run (UTC): 20261114-171005
+ansible [core 2.16.3]
+  config file = /home/vagrant/lesson12/ansible/ansible.cfg
+  configured module search path = ['/home/vagrant/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3/dist-packages/ansible
+  ansible collection location = /home/vagrant/.ansible/collections:/usr/share/ansible/collections
+  executable location = /usr/bin/ansible
+  python version = 3.12.3 (main, Aug 14 2025, 17:47:21) [GCC 13.3.0] (/usr/bin/python3)
+  jinja version = 3.1.2
+  libyaml = True
+
+--- Effective configuration ---
+ANSIBLE_NOCOLOR(env: ANSIBLE_NOCOLOR) = True
+CONFIG_FILE() = /home/vagrant/lesson12/ansible/ansible.cfg
+DEFAULT_HOST_LIST(/home/vagrant/lesson12/ansible/ansible.cfg) = ['/home/vagrant/lesson12/ansible/env/dev/inventory.ini']
+DEFAULT_PRIVATE_KEY_FILE(/home/vagrant/lesson12/ansible/ansible.cfg) = /home/vagrant/.ssh/lesson12_ed25519
+DEFAULT_REMOTE_USER(/home/vagrant/lesson12/ansible/ansible.cfg) = vagrant
+DEFAULT_TIMEOUT(/home/vagrant/lesson12/ansible/ansible.cfg) = 30
+HOST_KEY_CHECKING(/home/vagrant/lesson12/ansible/ansible.cfg) = True
+INTERPRETER_PYTHON(/home/vagrant/lesson12/ansible/ansible.cfg) = /usr/bin/python3
+RETRY_FILES_ENABLED(/home/vagrant/lesson12/ansible/ansible.cfg) = False
+
+--- Inventory: default dev ---
+@all:
+  |--@ungrouped:
+  |--@webservers:
+  |  |--dev
+
+--- Inventory: prod ---
+@all:
+  |--@ungrouped:
+  |--@webservers:
+  |  |--prod
+
+--- SSH + Python connectivity ---
+dev | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+prod | SUCCESS => {
+    "changed": false,
+    "ping": "pong"
+}
+
+--- Configure dev (default inventory) ---
+
+PLAY [Configure the web server] ************************************************
+
+TASK [Install wget, htop and nginx] ********************************************
+changed: [dev]
+
+TASK [Start nginx and enable it at boot] ***************************************
+ok: [dev]
+
+TASK [Show the environment] ****************************************************
+ok: [dev] => {
+    "msg": "This host is in dev environment"
+}
+
+PLAY RECAP *********************************************************************
+dev                        : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+--- Configure prod (explicit inventory) ---
+
+PLAY [Configure the web server] ************************************************
+
+TASK [Install wget, htop and nginx] ********************************************
+changed: [prod]
+
+TASK [Start nginx and enable it at boot] ***************************************
+ok: [prod]
+
+TASK [Show the environment] ****************************************************
+ok: [prod] => {
+    "msg": "This host is in prod environment"
+}
+
+PLAY RECAP *********************************************************************
+prod                       : ok=3    changed=1    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+--- Repeat dev: expected changed=0 ---
+
+PLAY [Configure the web server] ************************************************
+
+TASK [Install wget, htop and nginx] ********************************************
+ok: [dev]
+
+TASK [Start nginx and enable it at boot] ***************************************
+ok: [dev]
+
+TASK [Show the environment] ****************************************************
+ok: [dev] => {
+    "msg": "This host is in dev environment"
+}
+
+PLAY RECAP *********************************************************************
+dev                        : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+--- Repeat prod: expected changed=0 ---
+
+PLAY [Configure the web server] ************************************************
+
+TASK [Install wget, htop and nginx] ********************************************
+ok: [prod]
+
+TASK [Start nginx and enable it at boot] ***************************************
+ok: [prod]
+
+TASK [Show the environment] ****************************************************
+ok: [prod] => {
+    "msg": "This host is in prod environment"
+}
+
+PLAY RECAP *********************************************************************
+prod                       : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+--- Verify dev ---
+
+PLAY [Verify the configured web server] ****************************************
+
+TASK [Read installed packages] *************************************************
+ok: [dev]
+
+TASK [Check required packages] *************************************************
+ok: [dev] => {
+    "changed": false,
+    "msg": "All required packages are installed"
+}
+
+TASK [Read service states] *****************************************************
+ok: [dev]
+
+TASK [Check that nginx exists] *************************************************
+ok: [dev] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Check nginx state and autostart] *****************************************
+ok: [dev] => {
+    "changed": false,
+    "msg": "Nginx is running and enabled"
+}
+
+TASK [Check HTTP response on the managed host] *********************************
+ok: [dev]
+
+TASK [Show verification result] ************************************************
+ok: [dev] => {
+    "msg": "dev: dev environment, packages OK, nginx active/enabled, HTTP 200"
+}
+
+PLAY RECAP *********************************************************************
+dev                        : ok=7    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+--- Verify prod ---
+
+PLAY [Verify the configured web server] ****************************************
+
+TASK [Read installed packages] *************************************************
+ok: [prod]
+
+TASK [Check required packages] *************************************************
+ok: [prod] => {
+    "changed": false,
+    "msg": "All required packages are installed"
+}
+
+TASK [Read service states] *****************************************************
+ok: [prod]
+
+TASK [Check that nginx exists] *************************************************
+ok: [prod] => {
+    "changed": false,
+    "msg": "All assertions passed"
+}
+
+TASK [Check nginx state and autostart] *****************************************
+ok: [prod] => {
+    "changed": false,
+    "msg": "Nginx is running and enabled"
+}
+
+TASK [Check HTTP response on the managed host] *********************************
+ok: [prod]
+
+TASK [Show verification result] ************************************************
+ok: [prod] => {
+    "msg": "prod: prod environment, packages OK, nginx active/enabled, HTTP 200"
+}
+
+PLAY RECAP *********************************************************************
+prod                       : ok=7    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+
+All deployment and verification commands completed successfully.
